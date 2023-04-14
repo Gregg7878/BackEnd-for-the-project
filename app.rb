@@ -9,7 +9,7 @@ require_relative 'models/comment'
 
 class DeploysController < ApplicationController
   def index
-    url = URI("https://api.render.com/v1/services/serviceId/deploys?limit=20")
+    url = URI("https://the-g-blog.onrender.com")
 
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
