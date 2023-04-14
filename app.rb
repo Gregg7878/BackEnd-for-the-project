@@ -1,9 +1,28 @@
 # app.rb
-
+require 'uri'
+require 'net/http'
+require 'openssl'
 require 'sinatra'
 require 'json'
 require_relative 'models/article'
 require_relative 'models/comment'
+
+class DeploysController < ApplicationController
+  def index
+    url = URI("https://api.render.com/v1/services/serviceId/deploys?limit=20")
+
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+
+    request = Net::HTTP::Get.new(url)
+    request["accept"] = 'application/json'
+    request["authorization"] = 'Bearer Gregg'
+
+    response = http.request(request)
+    @deploys = JSON.parse(response.read_body)
+  end
+end
+
 
 # API endpoint to get a list of all articles
 get '/articles' do
